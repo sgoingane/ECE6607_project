@@ -4,9 +4,9 @@ import csv
 import openpyxl
 import re
 
-filename = "/home/allen/Downloads/data_1.xlsx"
-post_net_csv = "/home/allen/Downloads/post_net.csv"
-pre_net_csv = "/home/allen/Downloads/pre_net.csv"
+filename = "./data/data_1.xlsx"
+post_net_csv = "./data/post_net.csv"
+pre_net_csv = "./data/pre_net.csv"
 
 
 def initialize(workbook):
@@ -28,6 +28,7 @@ def initialize(workbook):
     workbook["post-cluster"]["F1"] = "Finance"
     workbook["post-cluster"]["G1"] = "Health"
     workbook["post-cluster"]["H1"] = "Other"
+
     workbook["pre-cluster"]["A1"] = "Academic"
     workbook["pre-cluster"]["B1"] = "Food"
     workbook["pre-cluster"]["C1"] = "Transportation"
@@ -113,7 +114,7 @@ def clusterData(sheet, clusters, cluster_sheet, counter):
 
 
 def xlsx2csv(sheet, csvfile):
-    with open(csvfile, "w") as f:
+    with open(csvfile, "w", newline='') as f:
         writer = csv.writer(f)
         data = []
         for i in range(1, sheet.max_row+1):
