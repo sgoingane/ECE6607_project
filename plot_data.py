@@ -45,15 +45,46 @@ def read_csv(path):
 
 def plot_pie(pre, post):
     # plot the percentage of categories before and after networking
-    fig = plt.figure(figsize=(8, 3))
+    fig = plt.figure(figsize=(12, 5))
+
     fig.add_subplot(121)
-    plt.pie(pre[1], labels=pre[0])
+    plt.title("Percentage before networking")
+    plt.pie(pre[1], wedgeprops={"linewidth": 2, "edgecolor": "white"}, labels=pre[0], autopct="%3.1f%%")
 
     fig.add_subplot(122)
-    plt.pie(post[1], labels=post[0])
+    plt.title("Percentage after networking")
+    plt.pie(post[1], wedgeprops={"linewidth": 2, "edgecolor": "white"}, labels=post[0], autopct="%3.1f%%")
 
     plt.show()
     fig.savefig('./media/pie_chart.png')
+
+
+def plot_bar(pre, post):
+    # plot the range and atd deviation before and after networking
+    cat = ["pre-networking", "post-networking"]
+    pre_data_bar = pre[1]
+    post_data_bar = post[1]
+
+    std_dev = [np.std(pre_data_bar/np.sum(pre_data_bar))* 100, np.std(post_data_bar/np.sum(post_data_bar)) * 100]
+    range_ = [(np.max(pre_data_bar/np.sum(pre_data_bar)) - np.min(pre_data_bar/np.sum(pre_data_bar))) * 100,
+             (np.max(post_data_bar/np.sum(post_data_bar)) - np.min(post_data_bar/np.sum(post_data_bar))) * 100]
+
+    # plot:
+    fig, ax = plt.subplots(figsize=(5, 5))
+    width = 0.35
+    x = np.arange(len(cat))
+    rects1 = ax.bar(x-width/2, std_dev, width, label='Std')
+    rects2 = ax.bar(x+width/2, range_, width, label='Range')
+
+    ax.set_xticks(x, cat)
+    ax.legend()
+
+    ax.bar_label(rects1, padding=3)
+    ax.bar_label(rects2, padding=3)
+
+    fig.tight_layout()
+    plt.show()
+    fig.savefig('./media/bar_chart.png')
 
 
 def plot_rank(pre, post):
@@ -114,3 +145,4 @@ if __name__ == '__main__':
 
     plot_pie(pre_data, post_data)
     plot_rank(pre_data, post_data)
+    plot_bar(pre_data, post_data)
