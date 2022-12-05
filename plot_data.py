@@ -44,22 +44,23 @@ def read_csv(path):
 
 
 def get_movement_matrix(pre, post):
-	categories = pre[0]
-	pre_data = pre[2]
-	post_data = post[2]
+    categories = pre[0]
+    pre_data = pre[2]
+    post_data = post[2]
 
-	movement = np.zeros((len(categories), len(categories)))
+    movement = np.zeros((len(categories), len(categories)))
 
-	for cc in range(pre_data.shape[0]):
-		for rr in range(pre_data.shape[1]):
-			if pre_data[cc, rr] != '':
-				found = np.where(post_data==pre_data[cc, rr])
+    for cc in range(pre_data.shape[0]):
+        for rr in range(pre_data.shape[1]):
+            if pre_data[cc, rr] != '':
+                found = np.where(post_data == pre_data[cc, rr])
 
-				if found:
-					for f in range(len(found[0])):
-						movement[cc, found[0][f]] += 1
-	print(movement)
-	return movement
+                if found:
+                    for f in range(len(found[0])):
+                        movement[cc, found[0][f]] += 1
+    print(movement)
+    return movement
+
 
 def plot_pie(pre, post):
     # plot the percentage of categories before and after networking
@@ -83,16 +84,16 @@ def plot_bar(pre, post):
     pre_data_bar = pre[1]
     post_data_bar = post[1]
 
-    std_dev = [np.std(pre_data_bar/np.sum(pre_data_bar))* 100, np.std(post_data_bar/np.sum(post_data_bar)) * 100]
-    range_ = [(np.max(pre_data_bar/np.sum(pre_data_bar)) - np.min(pre_data_bar/np.sum(pre_data_bar))) * 100,
-             (np.max(post_data_bar/np.sum(post_data_bar)) - np.min(post_data_bar/np.sum(post_data_bar))) * 100]
+    std_dev = [np.std(pre_data_bar / np.sum(pre_data_bar)) * 100, np.std(post_data_bar / np.sum(post_data_bar)) * 100]
+    range_ = [(np.max(pre_data_bar / np.sum(pre_data_bar)) - np.min(pre_data_bar / np.sum(pre_data_bar))) * 100,
+              (np.max(post_data_bar / np.sum(post_data_bar)) - np.min(post_data_bar / np.sum(post_data_bar))) * 100]
 
     # plot:
     fig, ax = plt.subplots(figsize=(5, 5))
-    width = 0.35
+    width = 0.3
     x = np.arange(len(cat))
-    rects1 = ax.bar(x-width/2, std_dev, width, label='Std')
-    rects2 = ax.bar(x+width/2, range_, width, label='Range')
+    rects1 = ax.bar(x - width / 2, std_dev, width, label='Std')
+    rects2 = ax.bar(x + width / 2, range_, width, label='Range')
 
     ax.set_xticks(x, cat)
     ax.legend()
@@ -158,23 +159,26 @@ def plot_rank(pre, post):
 
 
 def plot_heatmap(pre, post):
-	move = get_movement_matrix(pre, post)
+    move = get_movement_matrix(pre, post)
 
-	fig = plt.figure(figsize=(5,5))
-	plt.xlabel('To'), plt.ylabel('From')
-	plt.xticks(ticks=np.arange(len(pre[0])), labels=pre[0], rotation=90)
-	plt.yticks(ticks=np.arange(len(pre[0])), labels=pre[0])
+    fig = plt.figure(figsize=(5, 5))
+    plt.xlabel('To'), plt.ylabel('From')
+    plt.xticks(ticks=np.arange(len(pre[0])), labels=pre[0], rotation=90)
+    plt.yticks(ticks=np.arange(len(pre[0])), labels=pre[0])
 
-	hm = plt.imshow(move, cmap='inferno')
-	plt.colorbar(hm)
+    hm = plt.imshow(move, cmap='inferno')
+    plt.colorbar(hm)
 
-	plt.tight_layout(), plt.show()
+    plt.tight_layout()
+    plt.show()
+    plt.savefig('./media/heatmap.png')
+
 
 if __name__ == '__main__':
     pre_data = read_csv(path_pre_net)
     post_data = read_csv(path_post_net)
 
-	plot_heatmap(pre_data, post_data)
+    plot_heatmap(pre_data, post_data)
     plot_pie(pre_data, post_data)
     plot_rank(pre_data, post_data)
     plot_bar(pre_data, post_data)
