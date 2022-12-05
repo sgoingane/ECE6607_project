@@ -171,7 +171,7 @@ def plot_heatmap(pre, post):
 
     plt.tight_layout()
     plt.show()
-    plt.savefig('./media/heatmap.png')
+    fig.savefig('./media/heatmap.png')
 
 
 if __name__ == '__main__':
