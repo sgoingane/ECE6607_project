@@ -43,6 +43,24 @@ def read_csv(path):
     return categories, counts, data
 
 
+def get_movement_matrix(pre, post):
+	categories = pre[0]
+	pre_data = pre[2]
+	post_data = post[2]
+
+	movement = np.zeros((len(categories), len(categories)))
+
+	for cc in range(pre_data.shape[0]):
+		for rr in range(pre_data.shape[1]):
+			if pre_data[cc, rr] != '':
+				found = np.where(post_data==pre_data[cc, rr])
+
+				if found:
+					for f in range(len(found[0])):
+						movement[cc, found[0][f]] += 1
+	print(movement)
+	return movement
+
 def plot_pie(pre, post):
     # plot the percentage of categories before and after networking
     fig = plt.figure(figsize=(12, 5))
@@ -139,10 +157,24 @@ def plot_rank(pre, post):
     p.save(filename='./media/rank_chart.png', format="png", width=15, height=10, verbose=False)
 
 
+def plot_heatmap(pre, post):
+	move = get_movement_matrix(pre, post)
+
+	fig = plt.figure(figsize=(5,5))
+	plt.xlabel('To'), plt.ylabel('From')
+	plt.xticks(ticks=np.arange(len(pre[0])), labels=pre[0], rotation=90)
+	plt.yticks(ticks=np.arange(len(pre[0])), labels=pre[0])
+
+	hm = plt.imshow(move, cmap='inferno')
+	plt.colorbar(hm)
+
+	plt.tight_layout(), plt.show()
+
 if __name__ == '__main__':
     pre_data = read_csv(path_pre_net)
     post_data = read_csv(path_post_net)
 
+	plot_heatmap(pre_data, post_data)
     plot_pie(pre_data, post_data)
     plot_rank(pre_data, post_data)
     plot_bar(pre_data, post_data)
