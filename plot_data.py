@@ -53,6 +53,7 @@ def plot_pie(pre, post):
     plt.pie(post[1], labels=post[0])
 
     plt.show()
+    fig.savefig('./media/pie_chart.png')
 
 
 def plot_rank(pre, post):
@@ -104,6 +105,7 @@ def plot_rank(pre, post):
          )
 
     print(p)
+    p.save(filename='./media/rank_chart.png', format="png", width=15, height=10, verbose=False)
 
 
 if __name__ == '__main__':
