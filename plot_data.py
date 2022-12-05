@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 from plotnine import *
 from plydata import *
 import pandas as pd
+from pathlib import Path
 
-path_pre_net = os.getcwd() + "./data/pre_net_sorted.csv"
-path_post_net = os.getcwd() + "./data/post_net_sorted.csv"
+path_pre_net = Path(os.getcwd() + "/data/pre_net_sorted.csv")
+path_post_net = Path(os.getcwd() + "/data/post_net_sorted.csv")
 
 
 def read_csv(path):
