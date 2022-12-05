@@ -76,7 +76,7 @@ def plot_pie(pre, post):
     plt.pie(post[1], wedgeprops={"linewidth": 2, "edgecolor": "white"}, labels=post[0], autopct="%3.1f%%")
 
     plt.show()
-    fig.savefig('./media/pie_chart.png')
+    fig.savefig('./media/pie_chart.png', transparent=True)
 
 
 def plot_bar(pre, post):
@@ -104,7 +104,7 @@ def plot_bar(pre, post):
 
     fig.tight_layout()
     plt.show()
-    fig.savefig('./media/bar_chart.png')
+    fig.savefig('./media/bar_chart.png', transparent=True)
 
 
 def plot_rank(pre, post):
@@ -172,7 +172,7 @@ def plot_heatmap(pre, post):
 
     plt.tight_layout()
     plt.show()
-    fig.savefig('./media/heatmap.png')
+    fig.savefig('./media/heatmap.png', transparent=True)
 
 
 if __name__ == '__main__':
