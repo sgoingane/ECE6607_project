@@ -15,7 +15,7 @@ Topic 2: Focus on developing visualization for the impact of networking
 ## Visualization
 * Pie chart of different categories' percentage
 * Ranking chart of different categories
-*
+* Bar chart for max-min range and standard deviation of category percentage
 
 ## Dependency
 ### Python Library
